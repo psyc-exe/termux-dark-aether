@@ -1,0 +1,73 @@
+// app/build.gradle — Aether embedded APK module (forked from Termux app).
+// Package: net.aether.distro. Embeds Termux:X11 (third_party/termux-x11) when
+// AETHER_INCLUDE_X11_MODULE=1.
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    namespace 'net.aether.distro'
+    compileSdk 36
+    ndkVersion '29.0.13113456'
+
+    defaultConfig {
+        applicationId 'net.aether.distro'
+        minSdk 26          // Android 8 (Termux:X11 minimum)
+        targetSdk 36
+        versionCode 1
+        versionName '0.1.0-alpha.1'
+        multiDexEnabled true
+        externalNativeBuild {
+            cmake { arguments '-DANDROID_STL=c++_shared' }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Keep the bundled rootfs + proot payload as raw assets (large binaries).
+    aaptOptions {
+        noCompress 'zst'
+        ignoreAssetsPattern '!rootfs:!proot'
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            assets.srcDirs = ['src/main/assets']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+    kotlinOptions { jvmTarget = '21' }
+
+    packagingOptions {
+        // libXlorie.so must stay uncompressed (loaded directly from APK path).
+        jniLibs { useLegacyPackaging true }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+
+    // Vendored Termux:X11 (third_party/termux-x11/lorie) exposed as a module.
+    if (project.hasProperty('AETHER_INCLUDE_X11_MODULE') &&
+        project.property('AETHER_INCLUDE_X11_MODULE') == '1') {
+        implementation project(':termux-x11-lorie')
+    }
+}
+
+// Termux:X11 embedded library module (referenced above).
+project(':termux-x11-lorie') {
+    projectDir = file('../third_party/termux-x11/lorie')
+}

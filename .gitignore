@@ -1,0 +1,96 @@
+# installed packages (generated — do not edit manually)
+node_modules/
+.pnpm-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.pem
+
+# Java / Android build
+*.class
+*.dex
+*.jar
+*.aar
+*.iml
+.idea/
+*.iws
+*.suo
+*.ntvs*
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+*.pem
+
+# Linux
+*.pyc
+__pycache__/
+*.so
+
+# Windows
+Thumbs.db
+
+# Hermes / Grok workspace
+.grok/
+.server/
+.supp/
+.env
+.env.local
+.env.*.local
+
+# Vercel / TanStack Start build
+.vercel/
+dist/
+build/
+
+# Generated sources from TanStack Start
+src/
+vite.config.ts
+tsconfig.json
+startup.sh
+AGENTS.md
+AGENTS.project.md
+eslint.config.mjs
+package.json
+package-lock.json
+prettierrc*
+.server/
+.supp/
+
+# Artifacts / screenshots
+artifacts/
+screenshots/
+
+# Migration files (managed by app, not this project)
+migrations/
+
+# Installer artifacts (built from installer/ in CI)
+installer/bin/
+installer/distro/*.tar.*
+installer/agent/native/*/bin/
+installer/gpu/*.deb
+installer/.build/
+
+# GH pages
+installer/distro/gh-pages/
+
+# Cache
+.pytest_cache/
+.node-gyp/
+.aether/
+tmp/
+temp/
+.node_modules.lock
+
+# Public assets from Grok workspace
+public/avatar.jpg
+public/favicon.svg
+public/music/
+public/og.jpg
+public/__grok/
+public/wallpapers/
+
+# Server middleware from Grok workspace
+server/

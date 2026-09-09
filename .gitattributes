@@ -1,0 +1,6 @@
+# gitattributes for Aether — consistent line endings and diff behavior
+* text=auto eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+Makefile text eol=lf

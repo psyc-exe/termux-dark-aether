@@ -1,0 +1,7 @@
+# Global code owners for Aether Distro Launcher
+
+*.sh   @aether-org   # bash installer + lib modules
+*.md   @aether-org   # docs
+.github/**   @aether-org  # workflows, issue/PR templates
+installer/**   @aether-org
+public/**   @aether-org

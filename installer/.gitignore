@@ -1,0 +1,5 @@
+# installer/.gitignore (should already exist; extension for clarity)
+installer/bin/
+installer/distro/*.tar.*
+installer/agent/native/*/bin/
+installer/gpu/*.deb

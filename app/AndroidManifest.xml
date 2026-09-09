@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.aether.distro">
+
+    <!-- Aether requires Internet for first boot asset verification & on-demand updates -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Storage for /sdcard passthrough into the Debian rootfs -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <!-- Run commands into the bundled Termux environment -->
+    <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Aether"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Aether"
+        tools:targetApi="34">
+
+        <!-- Embedded X11 Home activity (subclasses vendored Termux:X11 MainActivity) -->
+        <activity
+            android:name="net.aether.distro.AetherHomeActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:ResizeableActivity="true"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|navigation|density"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Foreground runtime service: owns the first-boot state machine -->
+        <service
+            android:name="net.aether.distro.AetherRuntimeService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- Hidden Termux:X11 standalone launcher entry (disabled) -->
+        <activity
+            android:name="com.termux.x11.MainActivity"
+            android:enabled="false"
+            tools:node="remove" />
+
+        <meta-data
+            android:name="net.aether.distro.ROOTFS_NAME"
+            android:value="debian-aether-arm64-rootfs.tar.zst" />
+        <meta-data
+            android:name="net.aether.distro.PROOT_NAME"
+            android:value="termux-proot-aarch64.tar.zst" />
+    </application>
+</manifest>

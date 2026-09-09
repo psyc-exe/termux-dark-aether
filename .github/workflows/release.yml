@@ -1,0 +1,74 @@
+name: Aether Update
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/release.yml'
+      - 'installer/**'
+      - 'public/**'
+
+  schedule:
+    - cron: '0 4 * * *'
+
+jobs:
+  patch:
+    name: Patch & Tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: patch installer/
+        working-directory: installer
+        run: bash app/patch.sh all
+
+      - name: detect version
+        id: ver
+        working-directory: installer
+        run: |
+          V=$(date -u +%Y%m%d%H%M)
+          echo "VERSION=aether-${V}" >> "$GITHUB_OUTPUT"
+
+      - name: tag release
+        working-directory: installer
+        run: |
+          git tag -f "${{ steps.ver.outputs.VERSION }}" HEAD
+          git push --tags --force-with-lease
+
+      - name: upload release assets
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PRERELEASE: "true"
+        run: |
+          installer/app/patch.sh tag
+
+  release:
+    name: GitHub Release
+    runs-on: ubuntu-latest
+    needs: patch
+    permissions:
+      contents: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: wait for patch
+        run: sleep 10
+
+      - name: create release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh release create "aether-$(date -u +%Y%m%d%H%M)" \
+            --title "Aether $(date -u +%Y-%m-%d)" \
+            --prerelease \
+            installer/distro/* installer/agent/* installer/wallpapers/*
