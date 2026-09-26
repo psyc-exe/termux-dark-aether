@@ -1,5 +1,10 @@
 # Jules handoff: termux-dark-aether (B)
 
+## Maintainer direction, 27 Sep 2026
+
+- Reconstruct the missing embedded app inputs from verified upstream [termux/termux-app](https://github.com/termux/termux-app) and [termux/termux-x11](https://github.com/termux/termux-x11). Preserve license notices and inspect application ID, signing, and shared-UID constraints. [Issue #13](https://github.com/psyc-exe/termux-dark-aether/issues/13) tracks this separately from the rootfs repair. Build and inspect a real APK before calling it available.
+- Add [TermuxVoid](https://termuxvoid.github.io/) as **one optional native Termux APT repository** for its available agent CLI packages. [Issue #14](https://github.com/psyc-exe/termux-dark-aether/issues/14) has package names and acceptance criteria. Inspect each upstream package recipe: Claude Code and OpenCode use glibc loader wrappers, while Codex CLI and Hermes Agent take different installation paths. Do not assume every package uses `patchelf` or install every agent by default. Keep native Termux packages separate from Debian guest packages.
+
 ## Current build state, 27 Sep 2026
 
 - [`Aether Update` run 36264478864](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36264478864) passed after PR #7 was merged. Keep its release path separate from the APK problem.
