@@ -1,5 +1,14 @@
 # Jules handoff: termux-dark-aether (B)
 
+## Current build state, 27 Sep 2026
+
+- [`Aether Update` run 36264478864](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36264478864) passed after PR #7 was merged. Keep its release path separate from the APK problem.
+- [`Build Aether Embedded APK` run 36264464222](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36264464222) failed after PR #8 was merged. The failure is now `sdkmanager: command not found` in `install Android SDK 36 + NDK 29 + CMake` (exit 127). PR #8 removed `android-actions/setup-android@v3`, which supplied Android command-line tools. Restore a supported SDK setup or install command-line tools explicitly, then rerun the workflow to expose the next gate. Do not claim an APK build from an SDK-only fix.
+- [Jules issue #9](https://github.com/psyc-exe/termux-dark-aether/issues/9) tracks the current failed commit. Avoid another PR that merely changes the step name or assumes `sdkmanager` exists on `ubuntu-latest`.
+- The repository still lacks `gradlew`, `settings.gradle`, `app/src/`, and `third_party/termux-x11/`. A complete APK remains blocked until real source and toolchain inputs are supplied. Do not add placeholders or skip the inspection gate.
+
+The older baseline below records what was known at initial handoff; use the current run links above for this failure.
+
 ## Context and objective
 
 This is the **B** side of an A/B experiment. B was built with multiple agent harnesses and models. The separate `termux-agenticOS-beyond` repository is A; do not edit A or assume its implementation belongs here.
