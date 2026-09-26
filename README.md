@@ -5,6 +5,16 @@ self-contained APK) into a Linux workstation with X11 desktop, GPU
 acceleration, agentic AI CLIs, and a no-systemd service supervisor — all
 packages served from a single GitHub repo for easy updates.
 
+## Build snapshots · 27 Sep 2026
+
+**Installer host QA passed.** The [Ubuntu check run](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36263161013) ran the headless installer checks and Jules dispatcher tests. It does not verify Android installation or an APK.
+
+<img src="docs/evidence/host-qa-2026-09-27.png" alt="Installer host QA passed in GitHub Actions" width="720">
+
+**Embedded APK build is still failing.** The [manual build run](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36263775503) stopped during Android SDK setup, before rootfs or APK creation. No APK artifact was produced. [Jules is troubleshooting the build](https://github.com/psyc-exe/termux-dark-aether/issues/5).
+
+<img src="docs/evidence/apk-build-status-2026-09-27.png" alt="Embedded APK GitHub Actions build failed before producing an artifact" width="720">
+
 ## Two install methods
 
 | Method | Installer ships | Updates |
