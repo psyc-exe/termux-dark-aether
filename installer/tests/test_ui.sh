@@ -28,9 +28,9 @@ socat -l0 2>/dev/null || true
 wait_for_socket /nonexistent.sock 1 && { echo "ws false-positive"; fail=1; }
 
 # ── menu mock (whiptail available?) ──────────────────────────────────────────
-if command -v whiptail >/dev/null; then
+if [[ -t 0 && -t 2 ]] && command -v whiptail >/dev/null; then
   V=$(menu _T "title" "opt1" "opt2" 3>&1 2>&1) 2>/dev/null
-  [[ $V =~ ^[0-9]$ ]] || echo "whiptail menu FAIL"; fail=$((fail+0))
+  [[ $V =~ ^[0-9]$ ]] || { echo "whiptail menu FAIL"; fail=1; }
 fi
 
 echo "ui/state tests: $([ $fail == 0 ] && echo PASS || echo FAIL)"
