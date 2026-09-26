@@ -12,6 +12,8 @@ available from this repository yet.
 
 **Embedded APK build is still failing.** After PR #8, the [latest build run](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36264464222) stopped because `sdkmanager` was missing, before rootfs or APK creation. No APK artifact was produced. [Jules is troubleshooting this failure](https://github.com/psyc-exe/termux-dark-aether/issues/9). The screenshot below records an earlier failure at the same SDK stage.
 
+On [PR #11's review branch](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36265731755), Android SDK setup passed, then the rootfs build failed with a permission error. [That next failure is tracked separately](https://github.com/psyc-exe/termux-dark-aether/issues/12). The main-branch APK build is still failing and no APK artifact is available.
+
 **Installer update workflow passed.** [The latest `Aether Update` run](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36264478864) succeeded after PR #7. This is separate from APK production.
 
 <img src="docs/evidence/apk-build-status-2026-09-27.png" alt="Embedded APK GitHub Actions build failed before producing an artifact" width="720">
