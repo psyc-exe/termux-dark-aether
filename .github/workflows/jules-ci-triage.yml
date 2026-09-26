@@ -6,6 +6,8 @@ on:
       - '.github/workflows/jules-ci-triage.yml'
       - 'scripts/jules-ci-triage*'
       - 'scripts/jules-env-setup.sh'
+      - 'scripts/qa.sh'
+      - 'installer/**'
   workflow_run:
     workflows:
       - Aether Update
