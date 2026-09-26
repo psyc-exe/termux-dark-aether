@@ -33,7 +33,7 @@
 set -Eeuo pipefail
 
 _AE_CHECKOUT="${_AE_CHECKOUT:-installer}"
-GH="${GH_REPO:-$(cd "$(dirname -- "${BASH_SOURCE[0]}")/../.." && git -C . remote get-url origin 2>/dev/null || echo https://github.com/aether-org/termux-distro.git)}"
+GH="${GH_REPO:-$(cd "$(dirname -- "${BASH_SOURCE[0]}")/../.." && git -C . remote get-url origin 2>/dev/null || echo https://github.com/psyc-exe/termux-dark-aether.git)}"
 BRANCH="${GH_BRANCH:-HEAD}"
 
 _VERSION_FILE="$AE_HOME/version"

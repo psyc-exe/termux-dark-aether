@@ -27,7 +27,7 @@ headless.
 ```bash
 pkg update; pkg install -y tsu termux-x11 termux-api dialog proot-distro
 # Download installer + all libs from GH_REPO HEAD:
-curl -LO https://github.com/aether-org/termux-distro/raw/main/installer/aether-install.sh
+curl -LO https://github.com/psyc-exe/termux-dark-aether/raw/main/installer/aether-install.sh
 chmod +x aether-install.sh
 ./aether-install.sh
 ```
@@ -177,10 +177,10 @@ GH_REPO
 ## Developer setup
 
 ```bash
-git clone https://github.com/aether-org/termux-distro.git
-cd termux-distro
-./installer/app/patch.sh all    # build bin/ + distro tars
-gh release create "aether-test" --prerelease installer/
+git clone https://github.com/psyc-exe/termux-dark-aether.git
+cd termux-dark-aether
+./installer/app/patch.sh all    # build installer tar archive
+gh release create "aether-test" --prerelease dist/*
 # Then install: curl -LO .../aether-install.sh; chmod +x; ./aether-install.sh
 ```
 
