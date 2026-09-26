@@ -78,12 +78,12 @@ rm -rf "$TMPDIR_SP"
 
 # ── 5. menu fallback test ───────────────────────────────────────────────────
 echo "=== menu ==="
-if command -v whiptail >/dev/null; then
+if [[ -t 0 && -t 2 ]] && command -v whiptail >/dev/null; then
   V=$(menu _T "title" "a" "b" 3>&1 2>&1) 2>/dev/null
   [[ "$V" =~ ^[0-9]$ ]] || { warn "whiptail menu FAIL"; FAIL=$((FAIL+1)); }
   ok "whiptail menu"
 else
-  warn "whiptail not available — menu fallback skipped"
+  warn "interactive whiptail check skipped (no TTY or whiptail unavailable)"
 fi
 
 # ── 6. repo.sh structure test ────────────────────────────────────────────────
