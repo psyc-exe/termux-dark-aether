@@ -29,8 +29,7 @@ jobs:
           java-version: '21'
 
       - name: install Android SDK 36 + NDK 29 + CMake
-        uses: android-actions/setup-android@v3
-      - run: sdkmanager "platforms;android-36" "ndk;29.0.13113456" "cmake;3.22.1"
+        run: sdkmanager "platforms;android-36" "ndk;29.0.13113456" "cmake;3.22.1"
 
       - name: install rootfs build deps
         run: |
