@@ -1,9 +1,8 @@
 # Aether Distro Launcher
 
-Modular bash installer + embedded Android APK that turn stock Termux (or a
-self-contained APK) into a Linux workstation with X11 desktop, GPU
-acceleration, agentic AI CLIs, and a no-systemd service supervisor — all
-packages served from a single GitHub repo for easy updates.
+Modular bash installer for Termux, with an embedded Android APK under development.
+The planned APK combines a Linux desktop, X11, and AI CLIs; no verified APK is
+available from this repository yet.
 
 ## Build snapshots · 27 Sep 2026
 
@@ -11,7 +10,11 @@ packages served from a single GitHub repo for easy updates.
 
 <img src="docs/evidence/host-qa-2026-09-27.png" alt="Installer host QA passed in GitHub Actions" width="720">
 
-**Embedded APK build is still failing.** The [manual build run](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36263775503) stopped during Android SDK setup, before rootfs or APK creation. No APK artifact was produced. [Jules is troubleshooting the build](https://github.com/psyc-exe/termux-dark-aether/issues/5).
+**Embedded APK build is still failing.** After PR #8, the [latest build run](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36264464222) stopped because `sdkmanager` was missing, before rootfs or APK creation. No APK artifact was produced. [Jules is troubleshooting this failure](https://github.com/psyc-exe/termux-dark-aether/issues/9). The screenshot below records an earlier failure at the same SDK stage.
+
+On [PR #11's review branch](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36265731755), Android SDK setup passed, then the rootfs build failed with a permission error. [That next failure is tracked separately](https://github.com/psyc-exe/termux-dark-aether/issues/12). The main-branch APK build is still failing and no APK artifact is available.
+
+**Installer update workflow passed.** [The latest `Aether Update` run](https://github.com/psyc-exe/termux-dark-aether/actions/runs/36264478864) succeeded after PR #7. This is separate from APK production.
 
 <img src="docs/evidence/apk-build-status-2026-09-27.png" alt="Embedded APK GitHub Actions build failed before producing an artifact" width="720">
 
@@ -20,7 +23,7 @@ packages served from a single GitHub repo for easy updates.
 | Method | Installer ships | Updates |
 |---|---|---|
 | **Termux script** | `installer/aether-install.sh` + libs (pre-built in repo) | `aether-update` pulls latest HEAD from GH_REPO |
-| **Embedded APK** | Forked Termux app (`app/`) + bundled Debian rootfs + PRoot payload | Rebuilt APK, or `aether-update` once running |
+| **Embedded APK (planned)** | Build inputs are incomplete; no verified APK artifact | Pending a complete build |
 
 Path 2 follows the [Decentricity/Panix](https://github.com/Decentricity/Panix)
 pattern: a single APK that embeds Termux core + Termux:X11 + the Debian rootfs,
@@ -45,7 +48,7 @@ chmod +x aether-install.sh
 ## Quick start (embedded APK)
 
 ```bash
-# Build the self-contained APK (requires Android SDK 36 + NDK 29 + CMake 3.22.1):
+# Experimental build attempt (currently blocked; see handoff.md):
 git submodule update --init --recursive
 PANIX_INCLUDE_X11_MODULE=1 PANIX_USE_EXTERNAL_NATIVE_BUILD=1 PANIX_SIGN_RELEASE=0 \
   ./scripts/build-aether-apk.sh
